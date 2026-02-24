@@ -19,9 +19,8 @@ const Gameboard = (() => {
 
 })();
 
-const createPlayer = () => {
-    const playerX = ;
-    const playerO = ;
+const createPlayer = (name, marker) => {
+    return {name, marker};
 };
 
 const gameController = (() => {
