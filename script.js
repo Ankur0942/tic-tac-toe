@@ -1,7 +1,23 @@
-const board = (() => {
-    const game = [];
+const Gameboard = (() => {
+    const board = ["", "", "", "", "", "", "", "", ""];
 
-})()
+    const getBoard = () => board;
+
+    const placeMaker = (marker, index) => {
+        if (board[index] === ""){
+            board[index] = marker;
+            return true;
+        }
+        return false; //square was taken
+    }
+
+    const reset = () => {
+        board.forEach((_, i) => board[i] = "");
+    };
+
+    return {getBoard, placeMaker, reset};
+
+})();
 
 const createPlayer = () => {
     const playerX = ;
