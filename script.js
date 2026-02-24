@@ -102,3 +102,11 @@ const GameController = (() => {
     return { playRound };
 })();
 
+const DisplayController = (() => {
+
+    const renderBoard = () => {/* get the board array from gameboard, clear the board div, loop through the squares, etc */};
+    
+    const updateMessage = (text) => { /* sets the message div's text */ };
+
+    return {renderBoard, updateMessage};
+})();
