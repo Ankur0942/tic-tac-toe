@@ -3,7 +3,7 @@ const Gameboard = (() => {
 
     const getBoard = () => board;
 
-    const placeMaker = (index, marker) => {
+    const placeMarker = (index, marker) => {
         if (board[index] === ""){
             board[index] = marker;
             return true;
@@ -15,7 +15,7 @@ const Gameboard = (() => {
         board.forEach((_, i) => board[i] = "");
     };
 
-    return {getBoard, placeMaker, reset};
+    return {getBoard, placeMarker, reset};
 
 })();
 
@@ -39,7 +39,7 @@ const GameController = (() => {
     const checkWinner = () => {
         const board = Gameboard.getBoard();
 
-        for (combo of winCombos) { // for..in will give me the "index" of each element ("[0], [1], [2]..") so I used for..of to get the "value" of each element [0, 1, 2]
+        for (const combo of winCombos) { // for..in will give me the "index" of each element ("[0], [1], [2]..") so I used for..of to get the "value" of each element [0, 1, 2]
             const [a, b, c] = combo;
             if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {
                 return currentPlayer; //this player just won
@@ -59,7 +59,7 @@ const GameController = (() => {
     const resetGame = () => { currentPlayer = playerX; }
 
     const playRound = (index) => {
-        const success = Gameboard.placeMaker(index, currentPlayer.marker);
+        const success = Gameboard.placeMarker(index, currentPlayer.marker);
 
         if (!success) {
             DisplayController.updateMessage("This square is already taken");
