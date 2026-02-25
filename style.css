@@ -1,0 +1,48 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 8px;
+    margin: 40px auto;
+    width: fit-content;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.cell:hover {
+    background: #ddd;
+}
+
+.message {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background: #333;
+    color: white;
+    border-radius: 6px;
+}
+
+button:hover {
+    background: #555;
+}
