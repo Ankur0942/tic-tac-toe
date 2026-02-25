@@ -56,57 +56,70 @@ const GameController = (() => {
         currentPlayer = currentPlayer === playerX ? playerO : playerX;
     };
 
-    const printBoard = () => {
-        const b = Gameboard.getBoard();
-        console.log(`
-            ${b[0] || 0} | ${b[1] || 1} | ${b[2] || 2}
-            ${b[3] || 3} | ${b[4] || 4} | ${b[5] || 5}
-            ${b[6] || 6} | ${b[7] || 7} | ${b[8] || 8}
-            `);
-    };
+    const resetGame = () => { currentPlayer = playerX; }
 
     const playRound = (index) => {
         const success = Gameboard.placeMaker(index, currentPlayer.marker);
 
         if (!success) {
-            console.log("This square is already taken");
+            DisplayController.updateMessage("This square is already taken");
             return;
         }
 
-        printBoard();
+        DisplayController.renderBoard();
 
         const winner = checkWinner();
         if (winner) {
-            console.log(`${winner.name} wins!`);
-            Gameboard.reset();
-            currentPlayer = playerX;
+            DisplayController.updateMessage(`${winner.name} wins!`);
             return;
         }
 
         if (checkTie()) {
-            console.log("It's a tie!");
-            Gameboard.reset();
-            currentPlayer = playerX;
+            DisplayController.updateMessage("It's a tie!");
             return;
         }
 
         switchPlayer();
-        console.log(`${currentPlayer.name}'s turn (${currentPlayer.marker})`);
+        DisplayController.updateMessage(`${currentPlayer.name}'s turn (${currentPlayer.marker})`);
     };
 
-    //start the game
-    console.log("Game started! Player X goes first");
-    console.log("Call GameController.playRound(index) with index 0-8 to play.");
-    printBoard();
-
-    return { playRound };
+    return { playRound, resetGame };
 })();
 
 const DisplayController = (() => {
 
-    const renderBoard = () => {/* get the board array from gameboard, clear the board div, loop through the squares, etc */};
+    const boardDiv = document.querySelector('.board');
+    const messageDiv = document.querySelector('.message');
+    const restartBtn = document.getElementById('restart')
+
+    const renderBoard = () => {
+        boardDiv.innerHTML = "";
+        
+        const boardArray = Gameboard.getBoard();
+
+        boardArray.forEach((cell, index) => {
+            const cellDiv = document.createElement('div');
+            cellDiv.classList.add('cell');
+            cellDiv.dataset.index = index;
+            cellDiv.textContent = cell; // "X", "O", ""
+            cellDiv.addEventListener('click', () => {
+                GameController.playRound(index);
+            });
+            boardDiv.appendChild(cellDiv);
+        })
+
+    };
     
-    const updateMessage = (text) => { /* sets the message div's text */ };
+    const updateMessage = (text) => { 
+        messageDiv.textContent = text;
+    };
+
+    restartBtn.addEventListener('click', () => {
+        Gameboard.reset();
+        GameController.resetGame();
+        renderBoard();
+        updateMessage("Player X's turn");
+    })
 
     return {renderBoard, updateMessage};
 })();
