@@ -123,3 +123,6 @@ const DisplayController = (() => {
 
     return {renderBoard, updateMessage};
 })();
+
+DisplayController.renderBoard();
+DisplayController.updateMessage("Player X's turn");
